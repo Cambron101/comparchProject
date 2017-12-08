@@ -66,8 +66,27 @@ L1:
 	shl eax, 3
 
 	; Round 2. Let [abcd k s] denote the operation a = (a + G(b,c,d) + X[k] + 5A827999) <<< s.
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call G
+	add eax, ebx
+	add eax, array[0]
+	add eax, 5A827999
+	shl eax, 3
+
 
 	; Round 3. Let [abcd k s] denote the operation a = (a + H(b,c,d) + X[k] + 6ED9EBA1) <<< s.
+		mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call H
+	add eax, ebx
+	add eax, array[0]
+	add eax, 6ED9EBA1
+	shl eax, 3
 
 	; increment each of the four registers by the value it had before this block was started
 	add T, TT
