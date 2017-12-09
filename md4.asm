@@ -46,7 +46,7 @@ L1:
 	; Copy block i into X.
 	mov ecx 16
 	L2:
-
+	;Set X[j] to M[i*16+j].
 	loop L2
 	pop ecx
 	; Save A as AA, B as BB, C as CC, and D as DD.
@@ -56,6 +56,7 @@ L1:
 	mov WW, W
 
 	; Round 1. Let [abcd k s] denote the operation a = (a + F(b,c,d) + X[k]) <<< s.
+	
 	mov ebx, T
 	mov X, U
 	mov Y, V
@@ -64,8 +65,145 @@ L1:
 	add eax, ebx
 	add eax, array[0]
 	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call F
+	add eax, ebx
+	add eax, array[1]
+	shl eax, 7
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call F
+	add eax, ebx
+	add eax, array[2]
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call F
+	add eax, ebx
+	add eax, array[3]
+	shl eax, 19			; Round 1. top layer
+	
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call F
+	add eax, ebx
+	add eax, array[4]
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call F
+	add eax, ebx
+	add eax, array[5]
+	shl eax, 7
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call F
+	add eax, ebx
+	add eax, array[6]
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call F
+	add eax, ebx
+	add eax, array[7]
+	shl eax, 19			; Round 1. 2 layer
+	
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call F
+	add eax, ebx
+	add eax, array[8]
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call F
+	add eax, ebx
+	add eax, array[9]
+	shl eax, 7
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call F
+	add eax, ebx
+	add eax, array[10]
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call F
+	add eax, ebx
+	add eax, array[11]
+	shl eax, 19			; Round 1. 3 layer
+		
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call F
+	add eax, ebx
+	add eax, array[12]
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call F
+	add eax, ebx
+	add eax, array[13]
+	shl eax, 7
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call F
+	add eax, ebx
+	add eax, array[14]
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call F
+	add eax, ebx
+	add eax, array[15]
+	shl eax, 19			; Round 1. 4 layer
+	
 
 	; Round 2. Let [abcd k s] denote the operation a = (a + G(b,c,d) + X[k] + 5A827999) <<< s.
+	
 	mov ebx, T
 	mov X, U
 	mov Y, V
@@ -75,10 +213,161 @@ L1:
 	add eax, array[0]
 	add eax, 5A827999
 	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call G
+	add eax, ebx
+	add eax, array[4]
+	add eax, 5A827999
+	shl eax, 5
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call G
+	add eax, ebx
+	add eax, array[8]
+	add eax, 5A827999
+	shl eax, 9
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call G
+	add eax, ebx
+	add eax, array[12]
+	add eax, 5A827999
+	shl eax, 13			; Round 2. top layer
+		
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call G
+	add eax, ebx
+	add eax, array[1]
+	add eax, 5A827999
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call G
+	add eax, ebx
+	add eax, array[5]
+	add eax, 5A827999
+	shl eax, 5
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call G
+	add eax, ebx
+	add eax, array[9]
+	add eax, 5A827999
+	shl eax, 9
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call G
+	add eax, ebx
+	add eax, array[13]
+	add eax, 5A827999
+	shl eax, 13			; Round 2. 2 layer
+			
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call G
+	add eax, ebx
+	add eax, array[2]
+	add eax, 5A827999
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call G
+	add eax, ebx
+	add eax, array[6]
+	add eax, 5A827999
+	shl eax, 5
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call G
+	add eax, ebx
+	add eax, array[10]
+	add eax, 5A827999
+	shl eax, 9
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call G
+	add eax, ebx
+	add eax, array[14]
+	add eax, 5A827999
+	shl eax, 13			; Round 2. 3 layer
+				
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call G
+	add eax, ebx
+	add eax, array[3]
+	add eax, 5A827999
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call G
+	add eax, ebx
+	add eax, array[7]
+	add eax, 5A827999
+	shl eax, 5
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call G
+	add eax, ebx
+	add eax, array[11]
+	add eax, 5A827999
+	shl eax, 9
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call G
+	add eax, ebx
+	add eax, array[15]
+	add eax, 5A827999
+	shl eax, 13			; Round 2. 4 layer
 
 
 	; Round 3. Let [abcd k s] denote the operation a = (a + H(b,c,d) + X[k] + 6ED9EBA1) <<< s.
-		mov ebx, T
+				
+	mov ebx, T
 	mov X, U
 	mov Y, V
 	mov Z, W
@@ -87,6 +376,156 @@ L1:
 	add eax, array[0]
 	add eax, 6ED9EBA1
 	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call H
+	add eax, ebx
+	add eax, array[8]
+	add eax, 6ED9EBA1
+	shl eax, 9
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call H
+	add eax, ebx
+	add eax, array[4]
+	add eax, 6ED9EBA1
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call H
+	add eax, ebx
+	add eax, array[12]
+	add eax, 6ED9EBA1
+	shl eax, 15			; Round 3 . 1 layer
+					
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call H
+	add eax, ebx
+	add eax, array[2]
+	add eax, 6ED9EBA1
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call H
+	add eax, ebx
+	add eax, array[10]
+	add eax, 6ED9EBA1
+	shl eax, 9
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call H
+	add eax, ebx
+	add eax, array[6]
+	add eax, 6ED9EBA1
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call H
+	add eax, ebx
+	add eax, array[14]
+	add eax, 6ED9EBA1
+	shl eax, 15			; Round 3 . 2 layer
+						
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call H
+	add eax, ebx
+	add eax, array[1]
+	add eax, 6ED9EBA1
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call H
+	add eax, ebx
+	add eax, array[9]
+	add eax, 6ED9EBA1
+	shl eax, 9
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call H
+	add eax, ebx
+	add eax, array[5]
+	add eax, 6ED9EBA1
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call H
+	add eax, ebx
+	add eax, array[13]
+	add eax, 6ED9EBA1
+	shl eax, 15			; Round 3 . 3 layer
+							
+	mov ebx, T
+	mov X, U
+	mov Y, V
+	mov Z, W
+	call H
+	add eax, ebx
+	add eax, array[3]
+	add eax, 6ED9EBA1
+	shl eax, 3
+	
+	mov ebx, W
+	mov X, T
+	mov Y, U
+	mov Z, V
+	call H
+	add eax, ebx
+	add eax, array[11]
+	add eax, 6ED9EBA1
+	shl eax, 9
+	
+	mov ebx, V
+	mov X, W
+	mov Y, T
+	mov Z, U
+	call H
+	add eax, ebx
+	add eax, array[7]
+	add eax, 6ED9EBA1
+	shl eax, 11
+	
+	mov ebx, U
+	mov X, V
+	mov Y, W
+	mov Z, T
+	call H
+	add eax, ebx
+	add eax, array[15]
+	add eax, 6ED9EBA1
+	shl eax, 15			; Round 3 . 4 layer
 
 	; increment each of the four registers by the value it had before this block was started
 	add T, TT
